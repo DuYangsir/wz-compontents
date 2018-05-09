@@ -1,6 +1,8 @@
 <template>
   <div class="main-content">
-    <wz-pop-menus></wz-pop-menus>
+    <i class="btn1">
+      <wz-pop-menus @listClick="clickOne" :listdata="data"></wz-pop-menus>
+    </i>
     <readme></readme>
   </div>
 </template>
