@@ -9,6 +9,9 @@
           <ul class="cascader-menus lists" @mouseleave="mouseleave()" v-if="(list.children && list.children.length > 0) && isShowListBox == index">
             <li class="cascader-menu list" v-for="(child, index) in list.children" :key="index" @click="listClick(child)">
               {{child.label}}
+              <i class="el-icon-arrow-right" v-if="child.children && child.children.length > 0">
+              </i>
+              
             </li>
           </ul>
         </li>
@@ -33,7 +36,7 @@ export default {
   //    },
   watch: {
     listdata: function() {
-      // this.data = util.copyObject(this.listdata,this.data)
+      this.data = JSON.parse(JSON.stringify(this.listdata))
     }
   },
   data() {
@@ -47,9 +50,12 @@ export default {
       data: []
     }
   },
+  mounted(){
+
+  },
   methods: {
     cascaderShow: function(e) {
-      // this.data = util.copyObject(this.listdata, this.data)
+      this.data = JSON.parse(JSON.stringify(this.listdata))
       this.isVisible = true
       e = e || window.event
       //分别兼容ie和chrome
@@ -103,3 +109,79 @@ export default {
   created: function() {}
 }
 </script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style lang="less" scoped rel="stylesheet/less">
+  li,ul{
+    padding: 0;
+    margin: 0;
+  }
+  li{
+    list-style-type:none;
+  }
+  .cascader-btn{
+    position: absolute;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    .cascader-menus-wrap{
+      transition: all .3s;
+      white-space: nowrap;
+      background: #fff;
+      position: absolute;
+      left: 0px;
+      margin: 5px 0;
+      z-index: 2;
+      border-radius: 2px;
+      .cascader-menus{
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+        height: auto;
+        border: 1px solid #dfe4ed;
+        background-color: #fff;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 6px 0;
+        min-width: 160px;
+        box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+      }
+
+      .cascader-menu{
+        cursor: pointer;
+        width: 160px;
+        font-size: 14px;
+        padding: 8px 20px;
+        position: relative;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: #5a5e66;
+        height: 34px;
+        line-height: 1.5;
+        box-sizing: border-box;
+        cursor: pointer;
+        i{
+          position: absolute;
+          right: 20px;
+        }
+      }
+      .list-show{
+        display: inline-block;
+      }
+      .cascader-menus.lists{
+        height: auto;
+        position: absolute;
+        top: -7px;
+        left: 160px;
+        box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+      }
+      .cascader-menu:hover{
+        background-color: #f5f7fb;
+      }
+
+    }
+
+  }
+</style>
